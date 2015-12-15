@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+<head>
+	<title>Treat Box</title>
+</head>
+<body>
+	<h2>Max the Dog tries to catch his treat!</h2>
+    <canvas id="canvas" width="800" height="500"></canvas>
+<script type='text/javascript'>
+var canvas = document.getElementById('canvas'),
+    context = canvas.getContext('2d'),
+    x = Math.random()*canvas.width,
+    y = Math.random()*canvas.height,
+	dx = Math.random()*10,
+	dy = Math.random()*5,
+    width = 800,
+    height = 500;
+	
+function drawTreat(x,y,w,h){
+	context.beginPath();
+	context.moveTo(x,y);
+	context.lineTo(x + w/2, y + h);
+	context.lineTo(x - w/2, y + h);
+	context.fillStyle = 'black';
+	context.fill();
+}
+	
+function drawCircle(x,y,r) {
+  context.beginPath();
+  context.arc(x, y, r, 0, Math.PI*2, true);
+  context.fillStyle = 'brown';
+  context.fill();
+}
+
+function drawSquare(x,y,w,h) {
+	context.beginPath();
+	context.rect(x,y,w,h);
+	context.fillStyle = 'brown';
+	context.fill();
+}
+function drawTri(x,y,w,h) {
+	context.beginPath();
+	context.moveTo(x,y);
+	context.lineTo(x + w/2, y + h);
+	context.lineTo(x - w/2, y + h);
+	context.fillStyle = 'red';
+	context.fill();
+}
+function drawBox(x,y,w,h) {
+	context.beginPath();
+	context.rect(x,y,w,h);
+	context.fillStyle = 'brown';
+	context.fill();
+}
+
+function drawStar(x,y,nPoints,outerRadius,innerRadius) {
+    context.beginPath();
+		for (var ixVertex = 0; ixVertex <= 2 * nPoints; ++ixVertex) {
+        var angle = ixVertex * Math.PI / nPoints - Math.PI / 2;
+        var radius = ixVertex % 2 == 0 ? outerRadius : innerRadius;
+        context.lineTo(x + radius * Math.cos(angle), y + radius * Math.sin(angle));
+		}
+	context.fillStyle = 'yellow';
+	context.fill();
+}
+
+function drawRect(x,y,w,h) {
+  context.beginPath();
+  context.rect(x,y,w,h);
+  context.closePath();
+  context.fill();
+}
+function start() {
+  canvas;
+  context;
+  return setInterval(draw, 30);
+}
+function draw() {
+  context.clearRect(0, 0, width, height);
+  context.fillStyle = '#C7E6F5';
+  context.fillText = 'Max the Dog';
+  drawRect(0,0, width, height);
+  drawTreat(100,y,15,15);
+  drawCircle(x,y,20);
+  drawSquare(x,y,60,60);
+  drawTri(x,y,35,40);
+  drawBox(x,y,-40,20);
+  drawStar(x,y,8,8,18);
+	if (x + dx > width || x + dx < 0)
+		dx = -dx;
+	if (y + dy > height || y + dy < 0)
+		dy = -dy;
+		x += dx;
+		y += dy;
+}
+
+window.onload = start;
+</script>
+</body>
+</html>
