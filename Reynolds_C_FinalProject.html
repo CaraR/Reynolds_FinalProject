@@ -1,0 +1,141 @@
+<!doctype html>
+<html>
+<head>
+	<title>Canvas Test</title>
+</head>
+
+<style>
+	body {
+		background-image: url('earth.jpg');
+	}
+</style>
+<body>
+	<canvas id="canvas" width="1350" height="500"></canvas>
+	
+
+<script type="text/javascript">
+	var canvas;
+	var context;
+	var dx = 5;
+	var dy = 5;
+	var x = 150;
+	var y = 100;
+	var width = window.innerWidth;
+	var height = window.innerHeight;
+
+	function drawCircle(x,y,r) {
+		context.beginPath();
+		context.arc(x, y, r, 0, Math.PI*2, true);
+		context.fillStyle = 'brown';
+		context.fill();
+  }
+
+	function drawSquare(x,y,w,h) {
+		context.beginPath();
+		context.rect(x,y,w,h);
+		context.fillStyle = 'brown';
+		context.fill();
+}
+	function drawTri(x,y,w,h) {
+		context.beginPath();
+		context.moveTo(x,y);
+		context.lineTo(x + w/2, y + h);
+		context.lineTo(x - w/2, y + h);
+		context.fillStyle = 'red';
+		context.fill();
+}
+	function drawBox(x,y,w,h) {
+		context.beginPath();
+		context.rect(x,y,w,h);
+		context.fillStyle = 'brown';
+		context.fill();
+}
+	function onClick() {
+		drawBox.x = Math.random()*canvas.width;
+		drawBox.y = Math.random()*canvas.height;
+		var color = 'blue';
+		drawBox.color = color[Math.floor(Math.random()*color.length)];
+	}
+
+	function drawStar(x,y,nPoints,outerRadius,innerRadius) {
+		context.beginPath();
+		for (var ixVertex = 0; ixVertex <= 2 * nPoints; ++ixVertex) {
+        var angle = ixVertex * Math.PI / nPoints - Math.PI / 2;
+        var radius = ixVertex % 2 == 0 ? outerRadius : innerRadius;
+        context.lineTo(x + radius * Math.cos(angle), y + radius * Math.sin(angle));
+		}
+		context.fillStyle = 'yellow';
+		context.fill();
+}
+
+	function rect(x,y,w,h) {
+		context.beginPath();
+		context.rect(x,y,w,h);
+		context.closePath();
+		context.fill();
+		context.stroke();
+	}
+
+	function clear() {
+		context.clearRect(0, 0, width, height);
+	}
+
+	function init() {
+		canvas = document.getElementById('canvas');
+		context = canvas.getContext('2d');
+		context.font="30px Verdana";
+		return setInterval(draw, 10);
+	}
+
+	function doKeyDown(evt){
+		switch (evt.keyCode) {
+		case 38:  /* Up arrow was pressed */
+		if (y - dy > 0){
+			y -= dy;
+		}
+		break;
+		case 40:  /* Down arrow was pressed */
+		if (y + dy < height){
+			y += dy;
+		}
+		break;
+		case 37:
+		if (x - dx > 0){
+			x -= dx;
+		}
+		break;
+		case 39:
+		if (x + dx < width){
+			x += dx;
+		}
+		break;
+		}
+	}
+	
+
+	function draw() {
+		context.clearRect(0,0,width,height);
+		context.fillStyle = 'black';
+		context.strokeStyle = "black";
+		rect(0,0,width,height);
+		drawCircle(x, y, 20);
+		drawSquare(x,y,60,60);
+		drawTri(x,y,35,40);
+		drawBox(x,y,-40,20);
+		drawStar(x,y,8,8,18);
+		context.fillStyle='white';
+		context.fillText('Max the Dog...in Outer Space! Use your arrow keys to fly Max through space.',10,90);
+	}
+	
+	init();
+	window.addEventListener('keydown',doKeyDown,true);
+	window.addEventListener('mouseclick',onClick,true);
+</script>
+</section>
+</body>
+</html>
+	
+	
+	
+	
+	
